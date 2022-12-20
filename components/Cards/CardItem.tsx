@@ -1,8 +1,8 @@
 import {FunctionComponent} from "react";
 import {CardProps} from "../../../../YADA1/yada1/types/types";
 import styled from "styled-components";
-import {colors} from "../../../../YADA1/yada1/components/colors";
-import {ScreenWidth} from "../../../../YADA1/yada1/components/shared";
+import {colors} from "../colors";
+import {ScreenWidth} from "../shared";
 
 const CardBackground = styled.ImageBackground`
   width: ${ScreenWidth * 0.67}px;
@@ -33,17 +33,10 @@ const CardRow = styled.View`
   width: 100%;
 `;
 
-const Logo = styled.Image`
-  width: 100%;
-  height: 80%;
-  resize-mode: contain;
-  flex: 1;
-`;
-
 const CardItem: FunctionComponent<CardProps> = (props) => {
     return (
         <>
-            <CardBackground source={require('../../../../YADA1/yada1/assets/bgs/green-bg-card.jpg')}>
+            <CardBackground source={require('../../assets/bg/green-bg-card.jpg')}>
                 <CardTouchable onPress={() => {
                     console.log("not implemented yet")
                 }} underlayColor={colors.secondary}>

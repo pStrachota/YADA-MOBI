@@ -2,7 +2,7 @@ import {FunctionComponent} from "react";
 import styled from "styled-components";
 import {CardSectionProps} from "../../../../YADA1/yada1/types/types";
 import CardItem from "./CardItem";
-import SmallText from "../../../../YADA1/yada1/components/Texts/SmallText";
+import SmallText from "../text/SmallText";
 
 const CardList = styled.FlatList`
   flex: 1;

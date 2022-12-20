@@ -42,7 +42,7 @@ const Welcome: FunctionComponent = () => {
             <StatusBar style="light"/>
             <WelcomeContainer>
                 <TopSection>
-                    <TopImage source={require('../assets/bgs/green-bg-card.jpg')}/>
+                    <TopImage source={require('../assets/bg/green-bg-card.jpg')}/>
                 </TopSection>
                 <BottomSection>
                     <Image style={{
