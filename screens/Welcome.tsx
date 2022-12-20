@@ -5,6 +5,7 @@ import {Container} from "../components/shared";
 import {colors} from "../components/colors";
 import RegularButton from "../components/Buttons/RegularButton";
 import {Image} from "react-native";
+import {useNavigation} from "@react-navigation/native";
 
 
 const WelcomeContainer = styled(Container)`
@@ -34,6 +35,8 @@ const BottomSection = styled.View`
 
 const Welcome: FunctionComponent = () => {
 
+    const navigation = useNavigation();
+
     return (
         <>
             <StatusBar style="light"/>
@@ -49,7 +52,7 @@ const Welcome: FunctionComponent = () => {
                         marginBottom: 20,
                     }} source={require('../assets/logo/yada-logo.png')}/>
                     <RegularButton textStyles={{color: "white"}} onPress={() => {
-                        console.log("home button pressed")
+                        navigation.navigate("Home")
                     }}>Get started</RegularButton>
                 </BottomSection>
             </WelcomeContainer>
