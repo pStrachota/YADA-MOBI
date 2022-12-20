@@ -5,9 +5,10 @@ import {FunctionComponent, useEffect, useState} from "react";
 import {StatusBar} from "expo-status-bar";
 import CardSection from "../../../yada_github/yada/components/Cards/CardSection";
 import {Text, Image, TouchableOpacity} from "react-native";
-import SearchBar from "../components/SearchBar";
 import {Hints} from "../types/types";
 import FoodList from "../components/Search/FoodList";
+import axios from "axios";
+import SearchBar from "../components/Search/SearchBar";
 
 
 const HomeContainer = styled(Container)`
@@ -25,6 +26,36 @@ const Home: FunctionComponent = () => {
         setData([]);
     }, []);
 
+    function onChangeText(text: string) {
+
+        if (text.length === 0) {
+            setData([]);
+        }
+
+        setInput(text)
+
+        if (text.length > 2) {
+
+            axios.get(`https://edamam-food-and-grocery-database.p.rapidapi.com/parser`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        "x-rapidapi-host": "edamam-food-and-grocery-database.p.rapidapi.com",
+                        "x-rapidapi-key": "994f79943amsh226ef11f9958b0ep1d35b9jsn5809bb9a2c29",
+                    },
+                    params: {
+                        ingr: text
+                    }
+                })
+                .then((response) => {
+                        setData(response.data.hints);
+                        console.log(response.data.hints);
+
+                    }
+                )
+        }
+    }
 
     let sampleData = [
         {
@@ -43,7 +74,7 @@ const Home: FunctionComponent = () => {
         <>
             <HomeContainer>
                 <StatusBar style="dark"/>
-                <SearchBar placeholder="Find food" onChangeText={() => {console.log("not implemented yet")}} value={input}/>
+                <SearchBar placeholder="Find food" onChangeText={(text) => onChangeText(text)} value={input}/>
                 <FoodList data={data} keyExtractor={(item) => item.food.foodId}
                           renderItem={({item}) =>
                               <TouchableOpacity onPress={() => {
