@@ -6,10 +6,12 @@ import Profile from "../components/Header/Profile";
 import {colors} from "../components/colors";
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
+import FoodScreen from "../screens/Food";
 
 export type RootStackParamList = {
     Welcome: undefined;
     Home: undefined;
+    Food: undefined;
 }
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -49,6 +51,7 @@ const RootStack: FunctionComponent = () => {
                                   ),
                               }}
                 />
+                <Stack.Screen name="Food" component={FoodScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

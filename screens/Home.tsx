@@ -9,6 +9,7 @@ import {Hints} from "../types/types";
 import FoodList from "../components/Search/FoodList";
 import axios from "axios";
 import SearchBar from "../components/Search/SearchBar";
+import {useNavigation} from "@react-navigation/native";
 
 
 const HomeContainer = styled(Container)`
@@ -18,6 +19,8 @@ const HomeContainer = styled(Container)`
 `;
 
 const Home: FunctionComponent = () => {
+
+    const navigation = useNavigation();
 
     const [input, setInput] = useState("");
     const [data, setData] = useState<Hints[]>([]);
@@ -78,7 +81,7 @@ const Home: FunctionComponent = () => {
                 <FoodList data={data} keyExtractor={(item) => item.food.foodId}
                           renderItem={({item}) =>
                               <TouchableOpacity onPress={() => {
-                                  console.log("not implemented yet");
+                                  navigation.navigate('Food')
                               }} style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: 12}}>
                                   <Image
                                       source={{uri: item.food.image}}
