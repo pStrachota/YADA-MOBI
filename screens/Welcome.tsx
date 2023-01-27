@@ -50,7 +50,7 @@ const Welcome: FunctionComponent = () => {
                         height: 300,
                         alignSelf: 'center',
                         marginBottom: 20,
-                    }} source={require('../assets/logo/yada-logo.png')}/>
+                    }} source={require('../assets/logo/logo2.png')}/>
                     <Button mode="contained" onPress={() => {
                         navigation.navigate("Home")
                     }}>
