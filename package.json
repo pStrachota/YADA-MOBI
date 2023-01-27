@@ -19,7 +19,8 @@
     "react-native": "0.70.5",
     "react-native-paper": "^5.1.4",
     "react-native-web": "~0.18.9",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "expo-speech": "~11.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

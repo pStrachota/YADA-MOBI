@@ -1,21 +1,17 @@
 import styled from "styled-components";
 import {Container} from "../components/shared";
 import {colors} from "../components/colors";
-import {FunctionComponent, useEffect, useState} from "react";
+import React, {FunctionComponent, useEffect, useState} from "react";
 import {StatusBar} from "expo-status-bar";
-import {FlatList, Image, TouchableOpacity} from "react-native";
+import {FlatList, Image, TouchableOpacity, View} from "react-native";
 import {Hints} from "../types/types";
 import axios from "axios";
 import {useNavigation} from "@react-navigation/native";
 import {Card, Drawer, Searchbar, Text} from 'react-native-paper';
 import {useFoodState} from "../context/FoodContext";
-
-
-const HomeContainer = styled(Container)`
-  background-color: ${colors.white};
-  width: 100%;
-  flex: 1;
-`;
+import {useVoiceReaderState} from "../context/VoiceReaderContext";
+import {useTheme} from "../context/ThemeContext";
+import * as Speech from 'expo-speech'
 
 
 const CardList = styled.FlatList`
@@ -29,10 +25,23 @@ const Home: FunctionComponent = () => {
 
     const {food, setFood, foods, setFoods} = useFoodState();
 
+    const {toggleVoiceReader, isEnabled} = useVoiceReaderState();
+
+    const {toggleThemeType, themeType, isDarkTheme, theme} = useTheme();
+
     const navigation = useNavigation();
 
     const [input, setInput] = useState("");
     const [data, setData] = useState<Hints[]>([]);
+
+    useEffect(() => {
+        if (isEnabled) {
+            Speech.speak('On this screen you can search for food to check for nutrition facts by typing text in search bar. ' +
+                'Recently searched food will be shown on the bottom of the screen. ' +
+                'You can also set high contrast theme and enable voice helper, by pressing on the icon on the top right.', {language: 'en-US'})
+
+        }
+    }, []);
 
     useEffect(() => {
         setData([]);
@@ -71,7 +80,10 @@ const Home: FunctionComponent = () => {
 
     return (
         <>
-            <HomeContainer>
+            <View style={{
+                flex: 1,
+                width: '100%',
+            }}>
                 <StatusBar style="dark"/>
                 <Searchbar placeholder="Find food" onChangeText={(text) => onChangeText(text)} value={input}/>
                 <FlatList style={{
@@ -137,6 +149,7 @@ const Home: FunctionComponent = () => {
                             setFoods([item, ...foods])
                         }}>
                             <Card style={{
+                                backgroundColor: theme.colors.primary,
                                 marginHorizontal: 12,
                                 width: 200,
 
@@ -155,7 +168,7 @@ const Home: FunctionComponent = () => {
                         </TouchableOpacity>
                     }
                 />
-            </HomeContainer>
+            </View>
         </>
     );
 }

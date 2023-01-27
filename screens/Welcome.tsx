@@ -3,13 +3,12 @@ import {StatusBar} from "expo-status-bar";
 import styled from "styled-components/native";
 import {Container} from "../components/shared";
 import {colors} from "../components/colors";
-import {Image} from "react-native";
+import {Image, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {Button} from "react-native-paper";
 
 
 const WelcomeContainer = styled(Container)`
-  background-color: ${colors.white};
   justify-content: space-between;
   height: 100%;
   width: 100%;
@@ -27,12 +26,6 @@ const TopSection = styled.View`
   max-height: 55%;
 `;
 
-const BottomSection = styled.View`
-  width: 100%;
-  flex: 1;
-  justify-content: flex-end;
-`;
-
 const Welcome: FunctionComponent = () => {
 
     const navigation = useNavigation();
@@ -44,19 +37,22 @@ const Welcome: FunctionComponent = () => {
                 <TopSection>
                     <TopImage source={require('../assets/bg/green-bg-card.jpg')}/>
                 </TopSection>
-                <BottomSection>
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'space-evenly',
+                }}>
                     <Image style={{
                         width: 300,
-                        height: 300,
+                        height: 200,
                         alignSelf: 'center',
                         marginBottom: 20,
                     }} source={require('../assets/logo/logo2.png')}/>
                     <Button mode="contained" onPress={() => {
-                        navigation.navigate("Home")
+                        navigation.navigate("UserInfo")
                     }}>
-                        Get started
+                       Register
                     </Button>
-                </BottomSection>
+                </View>
             </WelcomeContainer>
         </>
     );
