@@ -3,9 +3,9 @@ import {StatusBar} from "expo-status-bar";
 import styled from "styled-components/native";
 import {Container} from "../components/shared";
 import {colors} from "../components/colors";
-import RegularButton from "../components/Buttons/RegularButton";
 import {Image} from "react-native";
 import {useNavigation} from "@react-navigation/native";
+import {Button} from "react-native-paper";
 
 
 const WelcomeContainer = styled(Container)`
@@ -51,9 +51,11 @@ const Welcome: FunctionComponent = () => {
                         alignSelf: 'center',
                         marginBottom: 20,
                     }} source={require('../assets/logo/yada-logo.png')}/>
-                    <RegularButton textStyles={{color: "white"}} onPress={() => {
+                    <Button mode="contained" onPress={() => {
                         navigation.navigate("Home")
-                    }}>Get started</RegularButton>
+                    }}>
+                        Get started
+                    </Button>
                 </BottomSection>
             </WelcomeContainer>
         </>

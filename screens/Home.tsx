@@ -3,13 +3,11 @@ import {Container} from "../components/shared";
 import {colors} from "../components/colors";
 import {FunctionComponent, useEffect, useState} from "react";
 import {StatusBar} from "expo-status-bar";
-import CardSection from "../../../yada_github/yada/components/Cards/CardSection";
-import {Text, Image, TouchableOpacity} from "react-native";
+import {FlatList, Image, TouchableOpacity} from "react-native";
 import {Hints} from "../types/types";
-import FoodList from "../components/Search/FoodList";
 import axios from "axios";
-import SearchBar from "../components/Search/SearchBar";
 import {useNavigation} from "@react-navigation/native";
+import {Card, Drawer, Searchbar, Text} from 'react-native-paper';
 
 
 const HomeContainer = styled(Container)`
@@ -77,8 +75,12 @@ const Home: FunctionComponent = () => {
         <>
             <HomeContainer>
                 <StatusBar style="dark"/>
-                <SearchBar placeholder="Find food" onChangeText={(text) => onChangeText(text)} value={input}/>
-                <FoodList data={data} keyExtractor={(item) => item.food.foodId}
+                <Searchbar placeholder="Find food" onChangeText={(text) => onChangeText(text)} value={input}/>
+                <FlatList style={{
+                    flex: 1,
+                    width: '100%',
+                    marginTop: 10,
+                }} data={data} keyExtractor={(item) => item.food.foodId}
                           renderItem={({item}) =>
                               <TouchableOpacity onPress={() => {
                                   navigation.navigate('Food')
@@ -89,7 +91,6 @@ const Home: FunctionComponent = () => {
                                   <Text style={{marginLeft: 12, fontSize: 16}}>{item.food.label}</Text>
                               </TouchableOpacity>
                           }/>
-                <CardSection data={sampleData}/>
             </HomeContainer>
         </>
     );
