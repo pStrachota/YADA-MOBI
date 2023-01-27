@@ -8,6 +8,7 @@ import {Hints} from "../types/types";
 import axios from "axios";
 import {useNavigation} from "@react-navigation/native";
 import {Card, Drawer, Searchbar, Text} from 'react-native-paper';
+import {useFoodState} from "../context/FoodContext";
 
 
 const HomeContainer = styled(Container)`
@@ -16,7 +17,17 @@ const HomeContainer = styled(Container)`
   flex: 1;
 `;
 
+
+const CardList = styled.FlatList`
+  flex: 1;
+  width: 100%;
+  padding-left: 25px;
+  padding-bottom: 15px;
+`;
+
 const Home: FunctionComponent = () => {
+
+    const {food, setFood, foods, setFoods} = useFoodState();
 
     const navigation = useNavigation();
 
@@ -58,19 +69,6 @@ const Home: FunctionComponent = () => {
         }
     }
 
-    let sampleData = [
-        {
-            "id": "food_bxv0jv7b0z0q0yap1x0z0a5x0z0z",
-            "food": "apple",
-            "calories": 52.0
-        },
-        {
-            "id": "food_bxv0jv7b0z0q0yap1x0z0a5x0z0z",
-            "food": "apple",
-            "calories": 52.0
-        },
-    ];
-
     return (
         <>
             <HomeContainer>
@@ -80,17 +78,83 @@ const Home: FunctionComponent = () => {
                     flex: 1,
                     width: '100%',
                     marginTop: 10,
-                }} data={data} keyExtractor={(item) => item.food.foodId}
+                }} data={data}
                           renderItem={({item}) =>
                               <TouchableOpacity onPress={() => {
                                   navigation.navigate('Food')
+                                  // console.log(item.food);
+                                  setFood(item.food)
+                                  if (foods.includes(item.food)) {
+                                      return;
+                                  }
+                                  if (foods.length > 2) {
+                                      foods.pop();
+                                  }
+                                  setFoods([item.food, ...foods])
                               }} style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: 12}}>
-                                  <Image
-                                      source={{uri: item.food.image}}
-                                      style={{width: 50, height: 50, borderRadius: 5}}/>
+
+                                  {
+                                      item.food.image == null ?
+
+                                          <Image
+                                              source={require('../assets/food2.png')}
+                                              style={{width: 50, height: 50, borderRadius: 5}}/>
+                                          :
+                                          <Image
+                                              source={{uri: item.food.image}}
+                                              style={{width: 50, height: 50, borderRadius: 5}}/>
+                                  }
                                   <Text style={{marginLeft: 12, fontSize: 16}}>{item.food.label}</Text>
                               </TouchableOpacity>
                           }/>
+                {
+                    foods.length > 0 &&
+                    <Text style={{
+                        marginVertical: 10,
+                        marginLeft: 35,
+                    }} variant="titleMedium">Recently searched</Text>
+                }
+                <CardList
+                    data={foods}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{
+                        paddingRight: 25,
+                    }}
+                    // renderItem={({item}: any) => <CardItem {...item} />}
+                    renderItem={({item}: any) =>
+                        <TouchableOpacity onPress={() => {
+                            navigation.navigate('Food')
+                            // console.log(item.food);
+                            setFood(item)
+                            if (foods.includes(item)) {
+                                return;
+                            }
+                            if (foods.length > 2) {
+                                foods.pop();
+                            }
+                            console.log(foods.length);
+                            setFoods([item, ...foods])
+                        }}>
+                            <Card style={{
+                                marginHorizontal: 12,
+                                width: 200,
+
+                            }}>
+                                {
+                                    item.image == null ?
+                                        <Card.Cover source={require('../assets/food2.png')}/>
+                                        :
+                                        <Card.Cover source={{uri: item.image}}/>
+                                }
+
+                                <Card.Content>
+                                    <Card.Title title={item.label}/>
+                                </Card.Content>
+                            </Card>
+                        </TouchableOpacity>
+                    }
+                />
             </HomeContainer>
         </>
     );
