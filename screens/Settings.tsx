@@ -6,6 +6,7 @@ import {Button, Switch, Text} from "react-native-paper";
 
 const Settings: FunctionComponent = () => {
 
+    const {toggleThemeType, themeType, isDarkTheme, theme} = useTheme();
 
     return (
         <>
@@ -18,7 +19,7 @@ const Settings: FunctionComponent = () => {
                 alignItems: 'center',
             }}>
                 <Text variant="titleMedium">Set high contrast theme</Text>
-                <Switch/>
+                <Switch value={isDarkTheme} onValueChange={toggleThemeType}/>
                 <Text variant="titleMedium">Enable voice helper</Text>
                 <Switch/>
             </View>

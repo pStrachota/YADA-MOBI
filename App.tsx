@@ -1,8 +1,14 @@
 import RootStack from "./navigation/RootStack";
+import {ThemeContextProvider} from "./context/ThemeContext";
+import {FoodProvider} from "./context/FoodContext";
 
 export default function App() {
-  return (
-    <RootStack/>
-  );
+    return (
+        <ThemeContextProvider>
+            <FoodProvider>
+                <RootStack/>
+            </FoodProvider>
+        </ThemeContextProvider>
+    );
 }
 
