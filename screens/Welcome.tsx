@@ -2,7 +2,6 @@ import React, {FunctionComponent} from "react";
 import {StatusBar} from "expo-status-bar";
 import styled from "styled-components/native";
 import {Container} from "../components/shared";
-import {colors} from "../components/colors";
 import {Image, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {Button} from "react-native-paper";
@@ -50,7 +49,7 @@ const Welcome: FunctionComponent = () => {
                     <Button mode="contained" onPress={() => {
                         navigation.navigate("UserInfo")
                     }}>
-                       Register
+                       Get started!
                     </Button>
                 </View>
             </WelcomeContainer>

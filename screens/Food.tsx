@@ -1,19 +1,19 @@
-import styled from "styled-components";
-import {colors} from "../components/colors";
-import {Container} from "../components/shared";
 import React, {FunctionComponent, useEffect} from "react";
 import {View} from "react-native";
-import {Card, DataTable, Divider, List, Text, Button, Badge} from "react-native-paper";
+import {Card, DataTable, Divider, List, Text, Badge} from "react-native-paper";
 import {useFoodState} from "../context/FoodContext";
 import {useVoiceReaderState} from "../context/VoiceReaderContext";
 import * as Speech from 'expo-speech'
+import {useUserInfoState} from "../context/UserInfoContext";
+import {calorieBurned, cyclingMET, joggingMET, swimmingMET, walkingMET, yogaMET} from "../constants/METConstants";
 
 const FoodScreen: FunctionComponent = () => {
 
-    const {food, setFood} = useFoodState();
+    const {food} = useFoodState();
 
-    const {toggleVoiceReader, isEnabled} = useVoiceReaderState();
+    const {isEnabled} = useVoiceReaderState();
 
+    const {weight} = useUserInfoState();
 
     useEffect(() => {
 
@@ -27,14 +27,14 @@ const FoodScreen: FunctionComponent = () => {
                 + food.nutrients.CHOCDF + ' Carbs: '
                 + food.nutrients.PROCNT + ' Protein: '
                 + food.nutrients.FAT + ' Fat: ' +
-                + food.nutrients.FIBTG + ' Fiber: ' +
+                +food.nutrients.FIBTG + ' Fiber: ' +
                 'In order to burn' + food.nutrients.ENERC_KCAL + ' calories' +
                 'You need to do the following exercises: ' +
-                'Running for' + Math.round(food.nutrients.ENERC_KCAL / 280 * 60) + 'minutes.' +
-                'Swimming for' + Math.round(food.nutrients.ENERC_KCAL / 487 * 60) + 'minutes.' +
-                'Cycling for' + Math.round(food.nutrients.ENERC_KCAL / 298 * 60) + 'minutes.' +
-                'Walking for' + Math.round(food.nutrients.ENERC_KCAL / 133 * 60) + 'minutes.' +
-                'Doing yoga for' + Math.round(food.nutrients.ENERC_KCAL / 183 * 60) + 'minutes.', {language: 'en-US'});
+                'Running for' + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(joggingMET, +weight)) * 60) + 'minutes.' +
+                'Swimming for' + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(swimmingMET, +weight)) * 60) + 'minutes.' +
+                'Cycling for' + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(walkingMET, +weight)) * 60) + 'minutes.' +
+                'Walking for' + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(cyclingMET, +weight)) * 60) + 'minutes.' +
+                'Doing yoga for' + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(yogaMET, +weight)) * 60) + 'minutes.', {language: 'en-US'});
         }
     }, []);
 
@@ -49,9 +49,7 @@ const FoodScreen: FunctionComponent = () => {
                         marginBottom: 10,
 
                     }}>
-                        <Text style={{
-                            // marginBottom: 10,
-                        }} variant="titleLarge">{food.label}</Text>
+                        <Text style={{}} variant="titleLarge">{food.label}</Text>
                         {food.nutrients.ENERC_KCAL > 400 ?
                             <Badge style={{
                                 marginLeft: 20,
@@ -70,7 +68,6 @@ const FoodScreen: FunctionComponent = () => {
                 {
                     food.image == null ? <Card.Cover source={require('../assets/food2.png')}/> :
                         <Card.Cover style={{
-                            // width: 300,
                             height: 230,
                             marginHorizontal: 20,
                         }} source={{uri: food.image}}/>
@@ -78,7 +75,6 @@ const FoodScreen: FunctionComponent = () => {
             </Card>
             <DataTable style={{marginRight: 30}}>
                 <DataTable.Header>
-                    {/*<DataTable.Title>{food.label}</DataTable.Title>*/}
                     <DataTable.Title numeric>Calories</DataTable.Title>
                     <DataTable.Title numeric>Carbs</DataTable.Title>
                     <DataTable.Title numeric>Protein</DataTable.Title>
@@ -99,24 +95,24 @@ const FoodScreen: FunctionComponent = () => {
                 burn {food.nutrients.ENERC_KCAL} calories</Text>
             <Text style={{marginLeft: 20}} variant="titleLarge">You will need to:</Text>
             <List.Item
-                title={"Jog " + Math.round(food.nutrients.ENERC_KCAL / 280 * 60) + " minutes"}
+                title={"Jog " + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(joggingMET, +weight)) * 60) + " minutes"}
                 left={props => <List.Icon {...props} icon="run"/>}
             />
             <List.Item
-                title={"Swim " + Math.round(food.nutrients.ENERC_KCAL / 487 * 60) + " minutes"}
+                title={"Swim " + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(swimmingMET, +weight)) * 60) + " minutes"}
                 left={props => <List.Icon {...props} icon="swim"/>}
             />
 
             <List.Item
-                title={"Walk " + Math.round(food.nutrients.ENERC_KCAL / 133 * 60) + " minutes"}
+                title={"Walk " + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(walkingMET, +weight)) * 60) + " minutes"}
                 left={props => <List.Icon {...props} icon="walk"/>}
             />
             <List.Item
-                title={"Cycle " + Math.round(food.nutrients.ENERC_KCAL / 298 * 60) + " minutes"}
+                title={"Cycle " + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(cyclingMET, +weight)) * 60) + " minutes"}
                 left={props => <List.Icon {...props} icon="bike"/>}
             />
             <List.Item
-                title={"Do yoga " + Math.round(food.nutrients.ENERC_KCAL / 183 * 60) + " minutes"}
+                title={"Do yoga " + Math.round(food.nutrients.ENERC_KCAL / (calorieBurned(yogaMET, +weight)) * 60) + " minutes"}
                 left={props => <List.Icon {...props} icon="yoga"/>}
             />
         </>
