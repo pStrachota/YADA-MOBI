@@ -117,9 +117,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [forks-url]: https://github.com/pStrachota/YADA-MOBI/network/members
 [stars-shield]: https://img.shields.io/github/stars/pStrachota/YADA-MOBI.svg?style=for-the-badge
 [stars-url]: https://github.com/pStrachota/YADA-MOBI/stargazers
-[issues-shield]: https://img.shields.io/github/issues/pStrachota/YADA-MOBIT.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/pStrachota/YADA-MOBI.svg?style=for-the-badge
 [issues-url]: https://github.com/pStrachota/YADA-MOBI/issues
-[license-shield]: https://img.shields.io/github/license/pStrachota/YADA-MOBIT.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/pStrachota/YADA-MOBI.svg?style=for-the-badge
 [license-url]: https://github.com/pStrachota/YADA-MOBI/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
